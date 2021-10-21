@@ -5,32 +5,34 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class FearEffect : MonoBehaviour
 {
+    /*
+    [SerializeField] private GameObject PPVol;
+    [SerializeField] private Transform player;
     private Grain grain;
     private PostProcessVolume postProcessVolume; 
     private void Start()
     {
         postProcessVolume = GetComponent<PostProcessVolume>();
-        postProcessVolume.profile.TryGetSettings<Grain>(out grain);
+       // postProcessVolume.profile.TryGetSettings<Grain>(out grain);
     }
 
-
-    private void Update()
+    private void OnTriggerEnter(Collider other)
     {
-
-
-        void OnTriggerEnter(Collider other)
+        print("hit");
+        print(other.gameObject.name);
+        //Destroy(other.gameObject);
+        if (other.transform.tag == "FearEffect")
         {
-            if (other.transform.tag == "Enemy")
+            print(other.transform.tag);
+            if ((player.position - other.transform.position).sqrMagnitude <= 20)
             {
-                if((transform.position- other.transform.position).sqrMagnitude <= 20)
-                {
-                    grain.intensity.value = 1f;
-                }
-                else
-                {
-                    grain.intensity.value = 0;
-                }
+                grain.intensity.value = 1f;
+            }
+            else
+            {
+                grain.intensity.value = 0;
             }
         }
-    }
+
+    } */
 }

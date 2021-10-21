@@ -9,7 +9,7 @@ public class DamageController : MonoBehaviour
     {
        // print(hit.transform.position.x);
 
-         if(distanceZ <= 10 && distanceX <= 10)
+         if(distanceZ <= 15 && distanceX <= 15)
          {
              hit.transform.GetComponent<EnemyHealth>().AddDamage(Damage * 3);
          }
@@ -21,5 +21,12 @@ public class DamageController : MonoBehaviour
          {
              hit.transform.GetComponent<EnemyHealth>().AddDamage(Damage / 2);
          } 
-    }    
+    }
+    public void ÑalculateDamage(Transform player, float distanceZ, float distanceX)
+    {
+        if(distanceZ <= 5 && distanceX <= 5)
+        {
+            player.GetComponent<PlayerHealth>().AddDamage(25);
+        }
+    }
 }

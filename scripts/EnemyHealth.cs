@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyHealth : MonoBehaviour
 {
+    
    [SerializeField] private int value;
    [SerializeField] private Animator Anim;
     private void Start()
@@ -23,6 +25,8 @@ public class EnemyHealth : MonoBehaviour
         {
             Anim.SetBool("Death", true);
             transform.GetComponent<BoxCollider>().enabled = false;
+            transform.GetComponent<NavMeshAgent>().enabled = false;
+            transform.GetComponent<EnemyAI>().enabled = false;
             //Destroy(gameObject);
         }
 
