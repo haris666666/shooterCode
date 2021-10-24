@@ -6,11 +6,13 @@ using UnityEngine.InputSystem;
 public class _Gun : MonoBehaviour
 {
     Animator Anim;
-
+    [SerializeField] private int _ammo = 0;
     [SerializeField] private Transform startRay;
     [SerializeField] private Transform player;
     [SerializeField] private Transform pointer;
-    [SerializeField] private ParticleSystem ps;
+    [SerializeField] private GameObject ps;
+    [SerializeField] private GameObject wound;
+    [SerializeField] private Transform startFire;
     
     public DamageController _damageController;
 
@@ -20,22 +22,39 @@ public class _Gun : MonoBehaviour
     private float timerHit = 7f;
 
     Ray GunRay;
+    public void addAmmo(int ammo)
+    {
+        _ammo += ammo;
+    }
+    public int getAmmo()
+    {
+        return _ammo;
+    }
+    public float getTimerGun()
+    {
+        return timerGun;
+    }
+    public bool getAimGun()
+    {
+        return aimGun;
+    }
+    
     private void Start()
     {
         Anim = GetComponent<Animator>();
         ps.GetComponent<Light>().intensity = 0;
-        ps.Stop();
+      //  ps.Stop();
     }
 
     void Update()
     {
         GunRay = new Ray(startRay.position, startRay.forward);
-        Debug.DrawRay(startRay.position, startRay.forward * 50, Color.red);
+       // Debug.DrawRay(startRay.position, startRay.forward * 50, Color.red);
 
         if (timerGun > 0)
         {
             timerGun -= Time.deltaTime;
-            ps.Stop();
+           // ps.Stop();
             ps.GetComponent<Light>().intensity = 0;
         }
         if (timerHit > 0 && aimGun == true) timerHit -= Time.deltaTime;
@@ -46,22 +65,30 @@ public class _Gun : MonoBehaviour
         {
             pointer.position = hit.point;
 
-            
+
 
             if (Mouse.current.leftButton.wasPressedThisFrame && timerGun <= 0)
             {
-                ps.Play();
-                ps.GetComponent<Light>().intensity = 2f;
-                if (hit.transform.tag == "Enemy")
+                if (_ammo > 0)
                 {
-                    
-                    _damageController.ÑalculateDamage(hit, Mathf.Abs(pointer.position.z - player.position.z), Mathf.Abs(pointer.position.x - player.position.x));
-                    
+                    Instantiate(ps, startFire);
+                    timerGun = 3f;
+                    //  ps.Play();
+                    ps.GetComponent<Light>().intensity = 2f;
+                    if (aimGun == true) timerGun--;
+                    if (hit.transform.tag == "Enemy")
+                    {
+                        _damageController.ÑalculateDamage(hit, Mathf.Abs(pointer.position.z - player.position.z), Mathf.Abs(pointer.position.x - player.position.x));
+                        Instantiate(wound, hit.point, Quaternion.Inverse(Quaternion.identity));
+
+                    }
+                    Anim.SetBool("Shoot", true);
+                    _ammo--;
                 }
-                Anim.SetBool("Shoot", true);
-                timerGun = 3f;
-                
+                if (_ammo <= 0) Anim.SetBool("NotAmmo", true);
             }
+            if (_ammo > 0) Anim.SetBool("NotAmmo", false);
+
 
             if (Mouse.current.rightButton.wasPressedThisFrame)
             {
@@ -96,6 +123,6 @@ public class _Gun : MonoBehaviour
     public void AnimExitTime()
     {
         Anim.SetBool("Shoot", false);
-        ps.Stop();
+      //  ps.Stop();
     }
 }

@@ -12,11 +12,15 @@ public class EnemyHealth : MonoBehaviour
     {
         Anim = GetComponent<Animator>();
     }
+    public int getValue()
+    {
+        return value;
+    }
 
     public void AddDamage(int damage)
     {
         value -= damage;
-        print(damage);
+       // print(damage);
     }
      
     void Update()

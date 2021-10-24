@@ -20,6 +20,10 @@ public class PlayerHealth : MonoBehaviour
         value -= damage;
         print(damage + "hero");
     }
+    public void FullHealth()
+    {
+        value = 100;
+    }
     void FixedUpdate()
     {
         vignetteValue();

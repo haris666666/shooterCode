@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamageController : MonoBehaviour
 {
-   [SerializeField] private int Damage = 10;
+   [SerializeField] private int Damage = 20;
     public void ÑalculateDamage(RaycastHit hit, float distanceZ, float distanceX)
     {
        // print(hit.transform.position.x);
@@ -13,7 +13,7 @@ public class DamageController : MonoBehaviour
          {
              hit.transform.GetComponent<EnemyHealth>().AddDamage(Damage * 3);
          }
-         if (distanceZ <= 20 && distanceX <= 20)
+         if (distanceZ <= 20 && distanceX <= 20 && distanceZ > 15 && distanceX > 15)
          {
              hit.transform.GetComponent<EnemyHealth>().AddDamage(Damage * 2);
          }

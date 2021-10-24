@@ -39,13 +39,19 @@ public class EnemyAI : MonoBehaviour
         }
         if ((agent.transform.position - player.position).sqrMagnitude > 2f * 2f) anim.SetBool("Attack", false);
         if ((agent.transform.position - player.position).sqrMagnitude > 30f * 30f) enemyEnabled = false;
-
         if (enemyEnabled == true)
         {
             agent.SetDestination(player.position);
             anim.SetBool("Walk", true);
         }
-     //   if (enemyEnabled == false) agent.Stop();
+
+
+        if (transform.GetComponent<EnemyHealth>().getValue() < 70)
+        {
+            anim.SetBool("Run", true);
+            agent.speed = 3;
+        }
+        //   if (enemyEnabled == false) agent.Stop();
     }
     /*public void AttackExit()
     {
